@@ -1,6 +1,5 @@
 package com.taxigame.world;
 
-import com.taxigame.abstracts.AbstractHuman;
 import com.taxigame.buildings.CarsSalon;
 import com.taxigame.buildings.GasStation;
 import com.taxigame.buildings.ServiceStation;
