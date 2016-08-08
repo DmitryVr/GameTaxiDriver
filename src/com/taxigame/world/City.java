@@ -3,6 +3,7 @@ package com.taxigame.world;
 import com.taxigame.buildings.CarsSalon;
 import com.taxigame.buildings.GasStation;
 import com.taxigame.buildings.ServiceStation;
+import com.taxigame.enums.CarCatalog;
 import com.taxigame.humans.Client;
 import com.taxigame.humans.TaxiDriver;
 
@@ -11,59 +12,67 @@ import java.util.Queue;
 
 /**
  * класс город
- *
- * это имитация движка игры
  */
 public class City {
 
     private String cityName; // название города
 
-
-    public TaxiDriver taxiDriver = null; // таксист
-    public CarsSalon carShowRoom = null; // автосалон
-    public GasStation gasStation = null; // заправочная станция
-    public ServiceStation serviceStation = null; // станция тех. обслуживания
+    private TaxiDriver taxiDriver = null; // таксист
+    private CarsSalon carsSalon = null; // автосалон
+    private GasStation gasStation = null; // заправочная станция
+    private ServiceStation serviceStation = null; // станция тех. обслуживания
     private Queue<Client> clients = new ArrayDeque<>(); // FIFO клиенты
 
+    public City(String name) {
 
-    public Client youAreNext() {
+        this.cityName = name;
+
+        taxiDriver = new TaxiDriver("Boris", 150000, 6);
+        carsSalon = new CarsSalon();
+        gasStation = new GasStation();
+        serviceStation = new ServiceStation();
+        clients.add(new Client("Olga", 16));
+        clients.add(new Client("Alexandr", 6));
+        clients.add(new Client("Mariya", 21));
+        clients.add(new Client("Pavel", 19));
+        clients.add(new Client("Elena", 11));
+
+    }
+
+    public void cityStart() {
+
+        System.out.println("City: " + cityName);
+
+        taxiDriver.showName(); // показать имя таксиста
+
+        taxiDriver.showDollars(); // показать сколько денег у таксиста
+
+        taxiDriver.goToCarsSalon(carsSalon, CarCatalog.BMW_M6_GRAN_COUPE); // выбрать и купить авто в автосалоне который в городе
+
+        taxiDriver.getInfoResources(); // информация о ресурсах
+
+        taxiDriver.ClientService(youAreNext()); // услуга клиенту
+        taxiDriver.ClientService(youAreNext()); // услуга клиенту
+        taxiDriver.ClientService(youAreNext()); // услуга клиенту
+
+        taxiDriver.getInfoResources(); // информация о ресурсах
+
+        taxiDriver.goToGasStation(gasStation); // заправить авто
+
+        taxiDriver.getInfoResources(); // информация о ресурсах
+
+        taxiDriver.goToServiceStation(serviceStation); // ремонтировать авто
+
+        taxiDriver.getInfoResources(); // информация о ресурсах
+
+        taxiDriver.ClientService(youAreNext()); // услуга клиенту
+        taxiDriver.ClientService(youAreNext()); // услуга клиенту
+
+    }
+
+    private Client youAreNext() {
         // следующий клиент
         return clients.remove();
-    }
-
-
-    public City(String name) {
-        this.cityName = name;
-    }
-
-    public void showCityName() {
-        System.out.println("City: " + cityName);
-    }
-
-
-    public void addTaxiDriver(TaxiDriver taxiDriver) {
-        // метод "добавляет" таксиста на "карту"
-        this.taxiDriver = taxiDriver;
-    }
-
-    public void addCarShowRoom(CarsSalon carShowRoom) {
-        // метод "добавляет" автосалон на "карту"
-        this.carShowRoom = carShowRoom;
-    }
-
-    public void addClient(Client client) {
-        // метод "добавляет" клиента на "карту"
-        clients.add(client);
-    }
-
-    public void addGasStation(GasStation gasStation) {
-        // метод "добавляет" заправочную станцию на "карту"
-        this.gasStation = gasStation;
-    }
-
-    public void addServiceStation(ServiceStation serviceStation) {
-        // метод "добавляет" станцию тех. обслуживания на "карту"
-        this.serviceStation = serviceStation;
     }
 
 }

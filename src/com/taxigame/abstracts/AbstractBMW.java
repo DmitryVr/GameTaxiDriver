@@ -19,11 +19,8 @@ public abstract class AbstractBMW implements InterfaceCar {
     protected int healthDecrease; // уменьшение "здоровья" за 1 км
     protected int fuelDecrease; // уменьшение топлива за 1 км
 
-
     protected int health; // уровень "здоровья"
-
     protected int fuel; // уровень топлива
-
 
     @Override
     public String getCarBrand() {
